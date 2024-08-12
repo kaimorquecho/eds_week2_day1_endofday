@@ -1,0 +1,32 @@
+---
+title: "endofday_activity"
+format: html
+---
+
+```{r}
+library(tidyverse)
+library(janitor)
+
+stl_lead <- read_csv(here::here("data","stl_blood_lead.csv")) %>%
+janitor::clean_names()
+skimr::skim(stl_lead)
+dim(stl_lead)
+
+
+
+stl_lead_prop <- stl_lead %>% 
+  mutate(prop_white = white/total_pop)
+
+```
+
+```{r, error = FALSE}
+
+
+pct_elevated <- ggplot(data = stl_lead_prop,aes(x = pct_elevated))+
+  geom_histogram(color = "red", fill = "red")
+pct_elevated
+ggsave(here::here("figs","pct_elevated.png"))
+
+```
+
+
